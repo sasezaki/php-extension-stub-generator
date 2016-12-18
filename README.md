@@ -1,4 +1,4 @@
-php-extension-stub-generator - PHP Extension Stub Generator
+PHP Extension Stub Generator
 ===========================================================
 
 PHP ReflectionExtension's Information Rewind to PHP Code As Stub.
@@ -9,14 +9,19 @@ Code Completion under IDE.
 ## USAGE
 
 ```
-$ php-extension-stub-generator.phar {extension name} 
+$ php-extension-stub-generator.phar dump-files {extension name} {dir} 
 ```
 
 ## USAGE Example
 
 ```
-$ php-extension-stub-generator.phar dump ast 
+$ php-extension-stub-generator.phar dump-files ast tmp
 ```
+
+```
+$ php -d extension=/home/you/git/nikic_php-ast/modules/ast.so php-extension-stub-generator.phar dump-files ast tmp
+```
+
 
 ## BUILDING phar
 
