@@ -1,0 +1,21 @@
+{
+  "output": "php-extension-stub-generator.phar",
+  "chmod":"0755",
+  "compactors": [
+    "Herrera\\Box\\Compactor\\Php"
+  ],
+  "extract": false,
+  "main": "bin/php-extension-stub-generator",
+  "files" : [
+    "vendor/autoload.php"
+  ],
+  "finder": [
+    {
+      "name": ["*.php"],
+      "exclude": ["test", "tests"],
+      "in": ["src", "vendor/composer",  "vendor/docopt", "vendor/zendframework"]
+    }
+  ],
+  "stub": true,
+  "web": false
+}

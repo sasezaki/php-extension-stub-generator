@@ -1,0 +1,76 @@
+#!/usr/bin/env php
+<?php
+use Zend\Console\ColorInterface as Color;
+use PHPExtensionStubGenerator\FilesDumper;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$doc = <<<DOC
+PHP Extension Stub Generator.
+
+Usage:
+  php-extension-stub-generator.phar dump <name>
+  php-extension-stub-generator.phar dump-files <name> <dir>
+  php-extension-stub-generator.phar (-h | --help)
+  php-extension-stub-generator.phar --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+
+DOC;
+
+try {
+    $console = \Zend\Console\Console::getInstance();
+    $docopt = Docopt::handle($doc, ['version'=>'PHP Extension Stub Generator 0.0.1']);
+
+    if ($docopt->args['dump']) {
+        if (extension_loaded($docopt->args['<name>'])) {
+            $console->writeLine("not implemented yet");
+            exit(0);
+        } else {
+            $console->writeLine("extension `{$docopt->args['<name>']}` is not loaded", Color::RED);
+            exit(1);
+        }
+    }
+    if ($docopt->args['dump-files']) {
+        if (extension_loaded($docopt->args['<name>'])) {
+            if ($docopt->args['<dir>'] && file_exists($docopt->args['<dir>'])) {
+                $prompt = new \Zend\Console\Prompt\Confirm("Are you sure you want to make files at `{$docopt->args['<dir>']}` ?");
+                if ($result = $prompt->show()) {
+                    /** @var FilesDumper $dumper */
+                    $filesDumper = new class(new ReflectionExtension($docopt->args['<name>']), $console) extends FilesDumper
+                    {
+                        private $console;
+
+                        public function __construct(ReflectionExtension $reflectionExtension, \Zend\Console\Adapter\AdapterInterface $console)
+                        {
+                            parent::__construct($reflectionExtension);
+                            $this->console = $console;
+                        }
+
+                        protected function getGenerationTargets()
+                        {
+                            foreach (parent::getGenerationTargets() as $file => $code) {
+                                $this->console->writeLine($file);
+                                yield $file => $code;
+                            }
+                        }
+                    };
+                    $filesDumper->dumpFiles($docopt->args['<dir>']);
+                } else {
+                    exit(0);
+                }
+            } else {
+                $console->writeLine("dir `{$docopt->args['<dir>']}` is not valid", Color::RED);
+                exit(1);
+            }
+        } else {
+            $console->writeLine("extension `{$docopt->args['<name>']}` is not loaded", Color::RED);
+            exit(1);
+        }
+    }
+} catch (\Exception $e) {
+    echo 'An Error has occured. ' , $e->getMessage() , PHP_EOL;
+    exit(1);
+}

@@ -1,0 +1,25 @@
+{
+    "name" : "sasezaki/php-extension-stub-generator",
+    "description" : "PHP ReflectionExtension's Information Rewind to PHP Code As Stub",
+    "license" : "BSD-3-Clause",
+    "keywords": ["extension", "stub", "ReflectionExtension"],
+    "require": {
+        "zendframework/zend-code": "^3",
+        "docopt/docopt": "^1.0",
+        "zendframework/zend-console": "^2.6"
+    },
+    "require-dev": {
+        "ext-phar": "*",
+        "phpunit/phpunit": "^5.6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPExtensionStubGenerator\\": "src/PHPExtensionStubGenerator"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPExtensionStubGeneratorTest\\": "tests/PHPExtensionStubGeneratorTest"
+        }
+    }
+}
