@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace PHPExtensionStubGenerator;
 
+use Iterator;
 use Generator;
 use AppendIterator;
 use ArrayIterator;
@@ -44,7 +45,7 @@ class FilesDumper
         }
     }
 
-    protected function getGenerationTargets()
+    protected function getGenerationTargets() : Iterator
     {
         $generates = new AppendIterator();
         $generates->append(new ArrayIterator($this->generateConstants()));
@@ -55,12 +56,12 @@ class FilesDumper
     }
 
 
-    public function setDocBlockGenerator(DocBlockGenerator $docBlockGenerator)
+    public function setDocBlockGenerator(DocBlockGenerator $docBlockGenerator) : void
     {
         $this->docBlockGenerator = $docBlockGenerator;
     }
 
-    public function getDocBlockGenerator()
+    public function getDocBlockGenerator() : DocBlockGenerator
     {
         if (!$this->docBlockGenerator instanceof DocBlockGenerator) {
             $docBlockGenerator = new DocBlockGenerator('auto generated file by PHPExtensionStubGenerator');
