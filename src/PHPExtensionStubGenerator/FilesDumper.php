@@ -97,7 +97,8 @@ class FilesDumper
                 $constName = $constant;
             }
 
-            $constantsFiles[$namespaceFilename] .= "const $constName = {$value};\n";
+            $encodeValue = is_string($value) ? sprintf('"%s"', $value) : $value;
+            $constantsFiles[$namespaceFilename] .= "const $constName = {$encodeValue};\n";
         }
 
         return $constantsFiles;
