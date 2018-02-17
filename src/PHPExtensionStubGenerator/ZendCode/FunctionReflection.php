@@ -49,8 +49,17 @@ class FunctionReflection extends BaseFunctionReflection
     public function getPrototype($format = FunctionReflection::PROTOTYPE_AS_ARRAY)
     {
         $returnType = 'mixed';
+        if ($this->hasReturnType()) {
+            $reflectReturn = $this->getReturnType();
+            if ($reflectReturn->allowsNull()) {
+                $returnType = sprintf("?%s", $reflectReturn->getName());
+            } else {
+                $returnType = $reflectReturn->getName();
+            }
+        }
+
         $docBlock = $this->getDocBlock();
-        if ($docBlock) {
+        if ($returnType === 'mixed' && $docBlock) {
             $return = $docBlock->getTag('return');
             $returnTypes = $return->getTypes();
             $returnType = count($returnTypes) > 1 ? implode('|', $returnTypes) : $returnTypes[0];
