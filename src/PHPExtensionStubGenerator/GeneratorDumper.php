@@ -68,9 +68,11 @@ class GeneratorDumper
                     yield "namespace {$namespace};";
                 }
 
-                yield "const $constName = {$value};";
+                $encodeValue = is_string($value) ? sprintf('"%s"', $value) : $value;
+                yield "const $constName = {$encodeValue};";
             } else {
-                yield "const $constant = {$value};";
+                $encodeValue = is_string($value) ? sprintf('"%s"', $value) : $value;
+                yield "const $constant = {$encodeValue};";
             }
         }
 
