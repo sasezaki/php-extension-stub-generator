@@ -7,10 +7,10 @@ use PHPExtensionStubGenerator\ {
     Console\FilesDumper, GeneratorDumper
 };
 
-require_once __DIR__ . '/../vendor/autoload.php';
+try {
 
-$doc = <<<DOC
-PHP Extension Stub Generator.
+    $doc = <<<DOC
+PHP Extension Stub Generator
 
 Usage:
   php-extension-stub-generator.phar dump <name>
@@ -24,8 +24,14 @@ Options:
 
 DOC;
 
-try {
+    require_once __DIR__ . '/../vendor/autoload.php';
+
     $console = \Zend\Console\Console::getInstance();
+    // colorize
+    $doc = str_replace('PHP Extension Stub Generator', $console->colorize('PHP Extension Stub Generator', Color::LIGHT_BLUE), $doc);
+    $doc = str_replace(['Usage:', 'Options:'], [$console->colorize('Usage:', Color::YELLOW), $console->colorize('Options:', Color::YELLOW)], $doc);
+    //$doc = str_replace(['dump', 'dump-files'], [$console->colorize('dump', Color::LIGHT_GREEN), $console->colorize('dump-files', Color::LIGHT_GREEN)], $doc);
+
     $docopt = Docopt::handle($doc, ['version'=>'PHP Extension Stub Generator 0.0.1']);
 
     if (!extension_loaded($docopt->args['<name>'])) {
