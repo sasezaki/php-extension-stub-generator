@@ -29,7 +29,7 @@ class FunctionGenerator
             $args[] = $argsLine;
         }
         $line .= implode(', ', $args);
-        $line .= '){}';
+        $line .= ')' . ($prototype['return'] !== 'mixed' ? ": {$prototype['return']}" : "") . ' {}';
 
         return $line;
     }
