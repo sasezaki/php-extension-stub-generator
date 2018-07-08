@@ -3,7 +3,6 @@ namespace PHPReRewindTest;
 
 use PHPExtensionStubGenerator\FilesDumper;
 use ReflectionExtension;
-use PHPExtensionStubGenerator\CodeGenerator;
 use PHPUnit_Framework_TestCase;
 
 class FilesDumperTest extends PHPUnit_Framework_TestCase
