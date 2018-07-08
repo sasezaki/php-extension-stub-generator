@@ -6,8 +6,10 @@ jobs:
       - image: circleci/php:7.2-node-browsers
     working_directory: ~/php-exension-stub-generator
     steps:
-      - checkout # special step to check out source code to working directory
-      - run: sudo docker-php-ext-install mbstring timecop
+      - checkout
+      - run: sudo pecl channel-update pecl.php.net
+      - run: sudo docker-php-ext-install mbstring
+      - run: sudo pecl install xdebug && sudo docker-php-ext-enable timcop
       - run: sudo composer self-update
       - restore_cache:
           keys:
