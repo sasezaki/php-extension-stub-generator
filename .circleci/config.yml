@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.2-node-browsers
+    working_directory: ~/php-exension-stub-generator
+    steps:
+      - checkout # special step to check out source code to working directory
+      - run: sudo docker-php-ext-install mbstring timecop
+      - run: sudo composer self-update
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+            - composer-v1-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run : ./vendeor/bin/phpunit tests
