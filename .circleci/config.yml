@@ -9,7 +9,10 @@ jobs:
       - checkout
       - run: sudo pecl channel-update pecl.php.net
       - run: sudo docker-php-ext-install mbstring
-      - run: sudo pecl install channel://pecl.php.net/timecop-1.2.10 && sudo docker-php-ext-enable timcop
+      - run: sudo pecl install channel://pecl.php.net/timecop-1.2.10
+      - run: sudo php --ini
+      - run: sudo pecl config-show
+#       sudo docker-php-ext-enable timcop
       - run: sudo composer self-update
       - restore_cache:
           keys:
