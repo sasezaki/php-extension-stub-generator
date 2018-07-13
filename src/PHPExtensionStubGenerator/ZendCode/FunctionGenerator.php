@@ -20,9 +20,8 @@ class FunctionGenerator
         $line = 'function' . ' ' . $prototype['name'] . '(';
         $args = [];
         foreach ($prototype['arguments'] as $name => $argument) {
-            $argsLine = ($argument['type']
-                    ? $argument['type'] . ' '
-                    : '') . ($argument['by_ref'] ? '&' : '') . '$' . $name;
+            $type = ($argument['type'] && $argument['type'] !== 'resource') ? "{$argument['type']} " : "";
+            $argsLine = $type . ($argument['by_ref'] ? '&' : '') . '$' . $name;
             if (!$argument['required']) {
                 $argsLine .= ' = ' . var_export($argument['default'], true);
             }
@@ -33,5 +32,5 @@ class FunctionGenerator
 
         return $line;
     }
-
 }
+
