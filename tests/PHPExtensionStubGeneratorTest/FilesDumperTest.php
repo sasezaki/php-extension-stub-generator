@@ -1,18 +1,23 @@
 <?php
 namespace PHPReRewindTest;
 
-use PHPExtensionStubGenerator\FilesDumper;
 use ReflectionExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use PHPExtensionStubGenerator\FilesDumper;
 
-class FilesDumperTest extends PHPUnit_Framework_TestCase
+class FilesDumperTest extends TestCase
 {
     /**
      * @var FilesDumper
      */
     private $generator;
 
-    private $tmpDir;
+    private static $tmpDir;
+
+    public static function setUpBeforeClass()
+    {
+        self::$tmpDir = sys_get_temp_dir() . '/php-extension-stub-generator';
+    }
 
     public function setUp()
     {
@@ -21,13 +26,8 @@ class FilesDumperTest extends PHPUnit_Framework_TestCase
 
     public function testDumpFiles()
     {
-        $this->markTestIncomplete();
-        $this->generator->dumpFiles($this->tmpDir);
-    }
-
-    public function testGenerateConstants()
-    {
-        $this->markTestIncomplete();
-        $constants = $this->generator->generateConstants();
+        $this->generator->dumpFiles(self::$tmpDir);
+        $this->assertTrue(file_exists(sprintf(FilesDumper::FUNCTIONS_FILENAME, self::$tmpDir)));
+        $this->assertTrue(file_exists(sprintf(FilesDumper::CONST_FILENAME, self::$tmpDir)));
     }
 }

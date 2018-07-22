@@ -12,6 +12,9 @@
         "ext-phar": "*",
         "phpunit/phpunit": "^5.6.4"
     },
+    "bin" : [
+        "php-extension-stub-generator"
+    ],
     "autoload": {
         "psr-4": {
             "PHPExtensionStubGenerator\\": "src/PHPExtensionStubGenerator"

@@ -21,4 +21,4 @@ jobs:
           key: composer-v1-{{ checksum "composer.lock" }}
           paths:
             - vendor
-      - run : ./vendeor/bin/phpunit tests
+      - run : phpunit tests
