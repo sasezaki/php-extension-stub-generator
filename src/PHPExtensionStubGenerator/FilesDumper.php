@@ -7,13 +7,14 @@ use Iterator;
 use Generator;
 use AppendIterator;
 use ArrayIterator;
-use PHPExtensionStubGenerator\ZendCode\FunctionGenerator;
 use ReflectionExtension;
 use Zend\Code\Generator\ {
     ClassGenerator, DocBlockGenerator
 };
 use Zend\Code\Reflection\ClassReflection;
-use PHPExtensionStubGenerator\ZendCode\FunctionReflection;
+use PHPExtensionStubGenerator\ZendCode\ {
+    FunctionGenerator, FunctionReflection
+};
 
 class FilesDumper
 {

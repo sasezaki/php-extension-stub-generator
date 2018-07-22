@@ -4,20 +4,17 @@ declare(strict_types=1);
 namespace PHPExtensionStubGenerator;
 
 use Generator;
-use PHPExtensionStubGenerator\ZendCode\FunctionGenerator;
 use ReflectionExtension;
 use Zend\Code\Generator\ {
     ClassGenerator, DocBlockGenerator
 };
 use Zend\Code\Reflection\ClassReflection;
-use PHPExtensionStubGenerator\ZendCode\FunctionReflection;
+use PHPExtensionStubGenerator\ZendCode\ {
+    FunctionGenerator, FunctionReflection
+};
 
 class GeneratorDumper
 {
-    const CONST_FILENAME = '%s/const.php';
-    const FUNCTIONS_FILENAME = '%s/functions.php';
-    const CLASS_FILENAME = '%s.php';
-
     private $reflectionExtension;
     private $docBlockGenerator;
 
@@ -32,7 +29,6 @@ class GeneratorDumper
         yield from $this->generateFunctions();
         yield from $this->generateClasses();
     }
-
 
     public function setDocBlockGenerator(DocBlockGenerator $docBlockGenerator) : void
     {
@@ -109,5 +105,4 @@ class GeneratorDumper
 
         return "";
     }
-
 }
